@@ -1,7 +1,8 @@
 name: Terraform Linting
 on:
-  push:
-    branches: [ master ]
+    pull_request:
+        branches:
+          - main
 
 jobs:
   tf-lint:
