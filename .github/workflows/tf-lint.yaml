@@ -1,4 +1,4 @@
-name: Terraform Linting
+name: Terraform Linting CI
 on:
     pull_request:
         branches:
