@@ -1,4 +1,4 @@
-name: Terraform Linting CI
+name: Terraform Linting and Security Scanning
 on:
   pull_request:
     types: [synchronize, labeled]
