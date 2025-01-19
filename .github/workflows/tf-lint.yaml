@@ -1,0 +1,11 @@
+name: Terraform Linting CI
+on:
+    pull_request:
+        branches:
+          - main
+
+jobs:
+  iac-lint:
+    uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint.yaml@main
+    secrets:
+      GITHUB_PAT: ${{ secrets.GH_PAT }}
