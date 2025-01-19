@@ -5,7 +5,9 @@ on:
           - main
 
 jobs:
+  
   iac-lint:
+    permissions: write-all
     uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint-sec.yaml@main
     secrets:
       GITHUB_PAT: ${{ secrets.GH_PAT }}
