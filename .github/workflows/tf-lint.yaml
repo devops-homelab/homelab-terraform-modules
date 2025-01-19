@@ -8,4 +8,4 @@ jobs:
   tf-lint:
     uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint.yaml
     secrets:
-      GITHUB: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB: ${{ secrets.GH_PAT }}
