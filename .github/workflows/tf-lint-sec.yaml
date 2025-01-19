@@ -7,9 +7,7 @@ on:
     paths-ignore:
       - 'README.md'
 
-
 jobs:
-  
   iac-lint:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'aws') || contains(github.event.pull_request.labels.*.name, 'digitalocean') }}
     permissions: write-all
