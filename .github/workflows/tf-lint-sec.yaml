@@ -10,6 +10,6 @@ jobs:
     permissions: write-all
     uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint-sec.yaml@main
     with:
-      working_directory: './digitalocean/${{ github.event.pull_request.labels[0].name }}'
+      working_directory: './${{ github.event.pull_request.labels[0].name }}'
     secrets:
       GITHUB_PAT: ${{ secrets.GH_PAT }}
