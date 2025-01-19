@@ -1,9 +1,12 @@
 name: Terraform Linting CI
 on:
   pull_request:
-    types: [opened, synchronize, labeled]
+    types: [synchronize, labeled]
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
+
 
 jobs:
   
