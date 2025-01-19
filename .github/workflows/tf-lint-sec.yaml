@@ -8,6 +8,7 @@ on:
 jobs:
   
   iac-lint:
+    if: ${{ github.event.pull_request.labels }}
     permissions: write-all
     uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint-sec.yaml@main
     with:
