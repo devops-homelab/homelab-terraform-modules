@@ -1,12 +1,14 @@
-name: Terraform Linting CI
+name: Terraform Linting and Security Scanning
 on:
   pull_request:
-    types: [opened, synchronize, labeled]
+    types: [synchronize, labeled]
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
+      - '.github/**'
 
 jobs:
-  
   iac-lint:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'aws') || contains(github.event.pull_request.labels.*.name, 'digitalocean') }}
     permissions: write-all
