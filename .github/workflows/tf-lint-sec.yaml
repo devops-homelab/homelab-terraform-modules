@@ -1,8 +1,9 @@
 name: Terraform Linting CI
 on:
-    pull_request:
-        branches:
-          - main
+  pull_request:
+    types: [opened, synchronize, labeled]
+    branches:
+      - main
 
 jobs:
   
