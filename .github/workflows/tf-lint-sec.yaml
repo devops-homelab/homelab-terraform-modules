@@ -8,7 +8,7 @@ on:
 jobs:
   
   iac-lint:
-    if: ${{ github.event.pull_request.labels }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'aws') || contains(github.event.pull_request.labels.*.name, 'digitalocean') }}
     permissions: write-all
     uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint-sec.yaml@main
     with:
