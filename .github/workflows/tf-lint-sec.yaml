@@ -1,0 +1,17 @@
+name: Terraform Linting CI
+on:
+  pull_request:
+    types: [opened, synchronize, labeled]
+    branches:
+      - main
+
+jobs:
+  
+  iac-lint:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'aws') || contains(github.event.pull_request.labels.*.name, 'digitalocean') }}
+    permissions: write-all
+    uses: devops-homelab/homelab-github-reusable-workflows/.github/workflows/tf-lint-sec.yaml@main
+    with:
+      working_directory: './${{ github.event.pull_request.labels[0].name }}'
+    secrets:
+      GITHUB_PAT: ${{ secrets.GH_PAT }}
