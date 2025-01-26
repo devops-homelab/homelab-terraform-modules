@@ -72,13 +72,13 @@ variable "registry_integration" {
   description = "Enables or disables the DigitalOcean container registry integration for the cluster. This requires that a container registry has first been created for the account."
 }
 
-variable "critical_node_pool" {
+variable "infra_node_pool" {
   type        = any
   default     = {}
   description = "Cluster default node pool."
 }
 
-variable "app_node_pools" {
+variable "app_node_pool" {
   type        = map(any)
   default     = {}
   description = "Cluster additional node pools."
