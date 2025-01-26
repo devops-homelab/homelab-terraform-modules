@@ -27,9 +27,9 @@ resource "digitalocean_kubernetes_cluster" "main" {
   registry_integration = var.registry_integration
 
   dynamic "node_pool" {
-    for_each = var.critical_node_pool
+    for_each = var.infra_node_pool
     content {
-      name       = lookup(node_pool.value, "name", "critical")
+      name       = lookup(node_pool.value, "name", "infra")
       size       = lookup(node_pool.value, "size", "s-1vcpu-2gb")
       node_count = lookup(node_pool.value, "node_count", 1)
       auto_scale = lookup(node_pool.value, "auto_scale", true)
@@ -64,7 +64,7 @@ resource "digitalocean_kubernetes_cluster" "main" {
 resource "digitalocean_kubernetes_node_pool" "main" {
   for_each   = var.enabled ? var.app_node_pools : {}
   cluster_id = join("", digitalocean_kubernetes_cluster.main[*].id)
-  name       = lookup(each.value, "name", "application")
+  name       = lookup(each.value, "name", "app")
   size       = lookup(each.value, "size", "s-1vcpu-2gb")
   node_count = lookup(each.value, "node_count", 1)
   auto_scale = lookup(each.value, "auto_scale", true)
