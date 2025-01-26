@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     if: github.event.pull_request.merged
+    permissions: write-all
     steps:
       - name: Tag
         uses: K-Phoen/semver-release-action@master
