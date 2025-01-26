@@ -62,7 +62,7 @@ resource "digitalocean_kubernetes_cluster" "main" {
 #Description : Provides a DigitalOcean Kubernetes node pool resource. While the default node pool must be defined in the digitalocean_kubernetes_cluster resource, this resource can be used to add additional ones to a cluster.
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 resource "digitalocean_kubernetes_node_pool" "main" {
-  for_each   = var.enabled ? var.app_node_pools : {}
+  for_each   = var.enabled ? var.app_node_pool : {}
   cluster_id = join("", digitalocean_kubernetes_cluster.main[*].id)
   name       = lookup(each.value, "name", "app")
   size       = lookup(each.value, "size", "s-1vcpu-2gb")
