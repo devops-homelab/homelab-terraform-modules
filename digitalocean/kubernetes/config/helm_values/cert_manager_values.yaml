@@ -49,3 +49,6 @@ webhook:
             operator: In
             values:
             - infra
+
+startupapicheck:
+  enabled: false
