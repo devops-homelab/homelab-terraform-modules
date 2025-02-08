@@ -15,6 +15,7 @@ affinity:
           - infra
 
 cainjector:
+  enabled: false
   tolerations:
     - key: "dedicated"
       operator: "Equal"
@@ -32,6 +33,7 @@ cainjector:
             - infra
 
 webhook:
+  enabled: false
   tolerations:
     - key: "dedicated"
       operator: "Equal"
