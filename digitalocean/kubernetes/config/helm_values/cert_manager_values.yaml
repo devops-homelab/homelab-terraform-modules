@@ -13,3 +13,37 @@ affinity:
           operator: In
           values:
           - infra
+
+cainjector:
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "infra"
+      effect: "NoSchedule"
+
+  affinity: 
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: doks.digitalocean.com/node-pool
+            operator: In
+            values:
+            - infra
+
+webhook:
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "infra"
+      effect: "NoSchedule"
+
+  affinity: 
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: doks.digitalocean.com/node-pool
+            operator: In
+            values:
+            - infra
