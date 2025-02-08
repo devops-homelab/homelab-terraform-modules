@@ -52,3 +52,12 @@ output "maintenance_policy_day" {
 output "local_file" {
   value = join("", digitalocean_kubernetes_cluster.main[*].kube_config[0].raw_config)
 }
+output "token" {
+  value = digitalocean_kubernetes_cluster.main[*].kube_config[0].token
+  description = "The token used to authenticate to the Kubernetes cluster."
+}
+
+output "cluster_ca_certificate" {
+  value = digitalocean_kubernetes_cluster.main[*].kube_config[0].cluster_ca_certificate
+  description = "The base64 encoded certificate authority data for the Kubernetes cluster."
+}
