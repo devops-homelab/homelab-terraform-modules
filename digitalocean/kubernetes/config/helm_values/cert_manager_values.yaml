@@ -33,7 +33,7 @@ cainjector:
             - infra
 
 webhook:
-  enabled: false
+  replicaCount: 0
   tolerations:
     - key: "dedicated"
       operator: "Equal"
