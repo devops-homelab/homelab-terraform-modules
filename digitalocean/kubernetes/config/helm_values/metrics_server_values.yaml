@@ -7,3 +7,8 @@ affinity:
           operator: In
           values:
           - infra
+tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "infra"
+    effect: "NoSchedule"
