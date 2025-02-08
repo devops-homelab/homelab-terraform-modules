@@ -9,7 +9,7 @@ resource "helm_release" "cert-manager" {
   atomic     = true
   namespace  = "kube-system"
   repository = "https://charts.jetstack.io"
-  version    = try(each.value.version, var.deploy_cert-manager.version, "")
+  version    = try(each.value.version, var.deploy_cert_manager.version, "")
   values     = [file("${path.module}/values/cert_manager_values.yaml")]
 
   dynamic "set" {
