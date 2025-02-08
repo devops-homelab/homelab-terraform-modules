@@ -10,7 +10,7 @@ resource "helm_release" "cert-manager" {
   namespace  = "kube-system"
   repository = "https://charts.jetstack.io"
   version    = try(each.value.version, var.deploy_cert_manager.version, "")
-  values     = [file("${path.module}/values/cert_manager_values.yaml")]
+  values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
 
   dynamic "set" {
     for_each = try(each.value.additional_set, [])
