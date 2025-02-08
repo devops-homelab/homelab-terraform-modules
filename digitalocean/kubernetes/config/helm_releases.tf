@@ -11,6 +11,7 @@ resource "helm_release" "cert-manager" {
   repository = "https://charts.jetstack.io"
   version    = try(each.value.version, var.deploy_cert_manager.version, "")
   values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
+  timeout = 100
 
   dynamic "set" {
     for_each = try(each.value.additional_set, [])
