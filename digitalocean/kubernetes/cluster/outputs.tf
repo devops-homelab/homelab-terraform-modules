@@ -61,3 +61,9 @@ output "cluster_ca_certificate" {
   value = digitalocean_kubernetes_cluster.main[*].kube_config[0].cluster_ca_certificate
   description = "The base64 encoded certificate authority data for the Kubernetes cluster."
 }
+
+output "kube_config" {
+  value = digitalocean_kubernetes_cluster.main[*].kube_config
+  description = "The kubeconfig file used to authenticate to the Kubernetes cluster."
+  
+}
