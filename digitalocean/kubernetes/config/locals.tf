@@ -1,3 +1,3 @@
 locals {
-  deploy_metrics-server            = var.deploy_metrics-server != null ? var.deploy_metrics-server : null
+  deploy_cert_manager            = var.deploy_cert_manager != null ? var.deploy_cert_manager : null
 }

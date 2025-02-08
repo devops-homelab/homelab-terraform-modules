@@ -1,5 +1,5 @@
-variable "deploy_metrics-server" {
-  description = "Deploy metrics-server"
+variable "deploy_cert_manager" {
+  description = "Deploy cert-manager Helm chart"
   type        = any
   default     = {}
 }

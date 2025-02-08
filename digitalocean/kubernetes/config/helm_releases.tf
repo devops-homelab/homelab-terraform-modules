@@ -1,16 +1,16 @@
 ################################################################################
-# Metrics Server
+# Cert Manager
 ################################################################################
-resource "helm_release" "metrics-server" {
-  for_each = { for k, v in local.deploy_metrics-server : k => v }
+resource "helm_release" "cert-manager" {
+  for_each = { for k, v in local.deploy_cert_manager : k => v }
 
-  name       = "metrics-server"
-  chart      = "metrics-server"
+  name       = "cert-manager"
+  chart      = "cert-manager"
   atomic     = true
   namespace  = "kube-system"
-  repository = "https://kubernetes-sigs.github.io/metrics-server/"
-  version    = try(each.value.version, var.deploy_metrics-server.version, "")
-  values     = [file("${path.module}/helm_values/metrics_server_values.yaml")]
+  repository = "https://charts.jetstack.io"
+  version    = try(each.value.version, var.deploy_cert-manager.version, "")
+  values     = [file("${path.module}/values/cert_manager_values.yaml")]
 
   dynamic "set" {
     for_each = try(each.value.additional_set, [])
