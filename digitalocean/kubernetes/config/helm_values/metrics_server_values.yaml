@@ -1,15 +1,15 @@
-# tolerations:
-#   - key: "dedicated"
-#     operator: "Equal"
-#     value: "infra"
-#     effect: "NoSchedule"
+tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "infra"
+    effect: "NoSchedule"
 
-# affinity: 
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#       - matchExpressions:
-#         - key: doks.digitalocean.com/node-pool
-#           operator: In
-#           values:
-#           - infra
+affinity: 
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: doks.digitalocean.com/node-pool
+          operator: In
+          values:
+          - infra
