@@ -15,7 +15,7 @@ affinity:
           - infra
 
 cainjector:
-  enabled: false
+  enabled: true
   tolerations:
     - key: "dedicated"
       operator: "Equal"
@@ -33,7 +33,7 @@ cainjector:
             - infra
 
 webhook:
-  replicaCount: 0
+  replicaCount: 1
   tolerations:
     - key: "dedicated"
       operator: "Equal"
@@ -51,4 +51,4 @@ webhook:
             - infra
 
 startupapicheck:
-  enabled: false
+  enabled: true
