@@ -52,3 +52,6 @@ webhook:
 
 startupapicheck:
   enabled: true
+  
+crds:
+  enabled: true
