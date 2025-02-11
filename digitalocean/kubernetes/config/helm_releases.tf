@@ -6,7 +6,7 @@ resource "helm_release" "cert-manager" {
 
   name       = "cert-manager"
   chart      = "cert-manager"
-  atomic     = true
+  atomic     = false
   namespace  = "kube-system"
   repository = "https://charts.jetstack.io"
   version    = try(each.value.version, var.deploy_cert_manager.version, "")
