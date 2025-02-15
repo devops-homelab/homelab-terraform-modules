@@ -37,14 +37,14 @@ resource "digitalocean_kubernetes_cluster" "main" {
       max_nodes  = lookup(node_pool.value, "max_nodes", 2)
       tags       = lookup(node_pool.value, "tags", null)
       labels     = lookup(node_pool.value, "labels", null)
-      dynamic "taint" {
-        for_each = lookup(node_pool.value, "taint", []) == null ? [] : lookup(node_pool.value, "taint", [])
-        content {
-          key    = taint.value["key"]
-          value  = taint.value["value"]
-          effect = taint.value["effect"]
-        }
+    dynamic "taint" {
+      for_each = try(node_pool.value.taint, []) # Use try() instead of lookup()
+      content {
+        key    = taint.value["key"]
+        value  = taint.value["value"]
+        effect = taint.value["effect"]
       }
+    }
     }
   }
 
@@ -74,7 +74,7 @@ resource "digitalocean_kubernetes_node_pool" "main" {
   labels     = lookup(each.value, "labels", null)
 
   dynamic "taint" {
-    for_each = lookup(each.value, "taint", []) == null ? [] : lookup(each.value, "taint", [])
+    for_each = try(each.value.taint, []) # Use try() to handle missing "taint" attribute
     content {
       key    = taint.value["key"]
       value  = taint.value["value"]
