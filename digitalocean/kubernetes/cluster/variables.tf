@@ -79,9 +79,22 @@ variable "infra_node_pool" {
 }
 
 variable "app_node_pool" {
-  type        = map(any)
-  default     = {}
-  description = "Cluster additional node pools."
+  type = map(object({
+    name       = optional(string, "app")
+    size       = optional(string, "s-1vcpu-2gb")
+    node_count = optional(number, 1)
+    auto_scale = optional(bool, true)
+    min_nodes  = optional(number, 1)
+    max_nodes  = optional(number, 2)
+    tags       = optional(list(string), [])
+    labels     = optional(map(string), {})
+    taint      = optional(list(object({
+      key    = string
+      value  = string
+      effect = string
+    })), []) # ✅ Ensure taint is optional with an empty list as default
+  }))
+  default = {} # Ensure an empty map is acceptable
 }
 
 variable "tags" {
