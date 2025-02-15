@@ -23,8 +23,11 @@ resource "helm_release" "cert-manager" {
   }
 }
 
+################################################################################
+# Ingress Nginx
+################################################################################
 resource "helm_release" "ingress-nginx" {
-  for_each = { for k, v in local.deploy_ingress-nginx : k => v }
+  for_each = { for k, v in local.deploy_nginx_ingress : k => v }
 
   name             = "ingress-nginx"
   chart            = "ingress-nginx"
