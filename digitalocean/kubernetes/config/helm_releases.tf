@@ -35,7 +35,7 @@ resource "helm_release" "ingress-nginx" {
   namespace        = "ingress-nginx"
   create_namespace = true
   repository       = "https://kubernetes.github.io/ingress-nginx"
-  version          = try(each.value.version, var.deploy_ingress-nginx.version, "")
+  version          = try(each.value.version, var.deploy_ingress_nginx.version, "")
   timeout          = 600
   values           = [file("${path.module}/values/ingress_nginx_values.yaml")]
 
