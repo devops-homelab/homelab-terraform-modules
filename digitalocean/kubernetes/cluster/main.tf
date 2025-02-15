@@ -38,11 +38,11 @@ resource "digitalocean_kubernetes_cluster" "main" {
       tags       = lookup(node_pool.value, "tags", null)
       labels     = lookup(node_pool.value, "labels", null)
       dynamic "taint" {
-        for_each = lookup(node_pool.value, "taint", [])
+        for_each = lookup(node_pool.value, "taint", []) == null ? [] : lookup(node_pool.value, "taint", [])
         content {
-          key    = lookup(taint.value, "key", null)
-          value  = lookup(taint.value, "value", null)
-          effect = lookup(taint.value, "effect", null)
+          key    = taint.value["key"]
+          value  = taint.value["value"]
+          effect = taint.value["effect"]
         }
       }
     }
@@ -74,11 +74,12 @@ resource "digitalocean_kubernetes_node_pool" "main" {
   labels     = lookup(each.value, "labels", null)
 
   dynamic "taint" {
-    for_each = lookup(each.value, "taint", [])
+    for_each = lookup(each.value, "taint", []) == null ? [] : lookup(each.value, "taint", [])
     content {
       key    = taint.value["key"]
       value  = taint.value["value"]
       effect = taint.value["effect"]
     }
   }
+
 }
