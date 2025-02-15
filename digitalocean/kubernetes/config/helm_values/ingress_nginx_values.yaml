@@ -1,15 +1,32 @@
 controller:
-  tolerations:
-   - key: "dedicated"
-     operator: "Equal"
-     value: "infra"
-     effect: "NoSchedule" 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: doks.digitalocean.com/node-pool
-            operator: In
-            values:
-            - infra
+  config:
+    client-body-buffer-size: "8m"
+  replicaCount: 2
+  minAvailable: 1  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi  
+    requests:
+      cpu: 100m
+      memory: 250Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 75  
+  # tolerations:
+  #  - key: "dedicated"
+  #    operator: "Equal"
+  #    value: "infra"
+  #    effect: "NoSchedule" 
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: doks.digitalocean.com/node-pool
+  #           operator: In
+  #           values:
+  #           - infra
+
