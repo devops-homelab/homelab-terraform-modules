@@ -37,7 +37,7 @@ resource "helm_release" "ingress-nginx" {
   repository       = "https://kubernetes.github.io/ingress-nginx"
   version          = try(each.value.version, var.deploy_nginx_ingress.version, "")
   timeout          = 600
-  values           = [file("${path.module}/values/ingress_nginx_values.yaml")]
+  values           = [file("${path.module}/helm_values/ingress_nginx_values.yaml")]
 
   dynamic "set" {
     for_each = try(each.value.additional_set, [])
