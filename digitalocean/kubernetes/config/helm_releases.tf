@@ -22,3 +22,26 @@ resource "helm_release" "cert-manager" {
     }
   }
 }
+
+resource "helm_release" "ingress-nginx" {
+  for_each = { for k, v in local.deploy_ingress-nginx : k => v }
+
+  name             = "ingress-nginx"
+  chart            = "ingress-nginx"
+  atomic           = true
+  namespace        = "ingress-nginx"
+  create_namespace = true
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  version          = try(each.value.version, var.deploy_ingress-nginx.version, "")
+  timeout          = 600
+  values           = [file("${path.module}/values/ingress_nginx_values.yaml")]
+
+  dynamic "set" {
+    for_each = try(each.value.additional_set, [])
+    content {
+      name  = set.value.name
+      value = set.value.value
+      type  = lookup(set.value, "type", null)
+    }
+  }
+}
