@@ -1,29 +1,4 @@
 ################################################################################
-# Cert Manager
-################################################################################
-resource "helm_release" "cert-manager" {
-  for_each = { for k, v in local.deploy_cert_manager : k => v }
-
-  name       = "cert-manager"
-  chart      = "cert-manager"
-  atomic     = false
-  namespace  = "kube-system"
-  repository = "https://charts.jetstack.io"
-  version    = try(each.value.version, var.deploy_cert_manager.version, "")
-  values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
-  timeout    = 100
-
-  dynamic "set" {
-    for_each = try(each.value.additional_set, [])
-    content {
-      name  = set.value.name
-      value = set.value.value
-      type  = lookup(set.value, "type", null)
-    }
-  }
-}
-
-################################################################################
 # Ingress Nginx
 ################################################################################
 resource "helm_release" "ingress-nginx" {
@@ -47,4 +22,63 @@ resource "helm_release" "ingress-nginx" {
       type  = lookup(set.value, "type", null)
     }
   }
+}
+
+################################################################################
+# Cert Manager
+################################################################################
+resource "helm_release" "cert-manager" {
+  for_each = { for k, v in local.deploy_cert_manager : k => v }
+
+  name       = "cert-manager"
+  chart      = "cert-manager"
+  atomic     = true
+  namespace  = "kube-system"
+  repository = "https://charts.jetstack.io"
+  version    = try(each.value.version, var.deploy_cert_manager.version, "")
+  values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
+  timeout    = 100
+
+  dynamic "set" {
+    for_each = try(each.value.additional_set, [])
+    content {
+      name  = set.value.name
+      value = set.value.value
+      type  = lookup(set.value, "type", null)
+    }
+  }
+
+  depends_on = [ helm_release.ingress-nginx ]
+}
+
+################################################################################
+# ARGO CD
+################################################################################
+resource "helm_release" "argo-cd" {
+  for_each = { for k, v in local.deploy_argo_cd : k => v }
+
+  name             = "argo-cd"
+  chart            = "argo-cd"
+  atomic           = true
+  namespace        = "argocd"
+  create_namespace = true
+  repository       = "https://argoproj.github.io/argo-helm"
+  version          = try(each.value.version, var.deploy_argo_cd.version, "")
+  values           = [templatefile("${path.module}/helm_values/argo_cd_values.yaml", {
+    argocd_url        = try(each.value.argocd_url, var.deploy_argo_cd.argocd_url, "")
+    pat_token         = try(each.value.pat_token, var.deploy_argo_cd.pat_token, "")
+    git_username      = try(each.value.git_username, var.deploy_argo_cd.git_username, "")
+  })]
+
+  dynamic "set" {
+    for_each = try(each.value.additional_set, [])
+    content {
+      name  = set.value.name
+      value = set.value.value
+      type  = lookup(set.value, "type", null)
+    }
+  }
+
+  depends_on = [ helm_release.ingress-nginx, helm_release.cert-manager ]
+
 }
