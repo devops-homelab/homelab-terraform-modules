@@ -37,9 +37,10 @@ server:
     enabled: true  
   ingress:
     enabled: true
+    tls: true
     ingressClassName: "nginx"
     annotations:
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
     hostname: argocd.meditrack-app.me
   extraArgs:
     - "--insecure"
