@@ -29,7 +29,7 @@ resource "kubectl_manifest" "cert_manager_cluster_issuer" {
     }
   })
 
-  depends_on = [helm_release.cert_manager]
+  depends_on = [helm_release.cert-manager]
 }
 
 resource "kubectl_manifest" "cert_manager_issuer" {
@@ -62,5 +62,5 @@ resource "kubectl_manifest" "cert_manager_issuer" {
     }
   })
 
-  depends_on = [helm_release.cert_manager]
+  depends_on = [helm_release.cert-manager]
 }
