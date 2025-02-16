@@ -40,7 +40,6 @@ server:
     tls: true
     ingressClassName: "nginx"
     annotations:
-      # nginx.ingress.kubernetes.io/ssl-redirect: "true"
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
     hostname: argocd.meditrack-app.me
   extraArgs:
