@@ -40,8 +40,7 @@ server:
     ingressClassName: "nginx"
     annotations:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    hosts:
-      - argocd.meditrack-app.me
+    hostname: argocd.meditrack-app.me
   extraArgs:
     - "--insecure"
     
