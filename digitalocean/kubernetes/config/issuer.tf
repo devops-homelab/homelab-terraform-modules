@@ -1,7 +1,7 @@
 # Description: This file contains the terraform configuration to create the cert-manager issuer.
 
 resource "kubectl_manifest" "cert_manager_cluster_issuer" {
-  count = var.deploy_cert_manager && var.issuer_type.type == "cluster_issuer" ? 1 : 0
+  count = var.issuer_type.type == "cluster_issuer" ? 1 : 0
 
   yaml_body = yamlencode({
     apiVersion = "cert-manager.io/v1"
@@ -33,7 +33,7 @@ resource "kubectl_manifest" "cert_manager_cluster_issuer" {
 }
 
 resource "kubectl_manifest" "cert_manager_issuer" {
-  count = var.deploy_cert_manager && var.issuer_type.type == "issuer" ? 1 : 0
+  count = var.issuer_type.type == "issuer" ? 1 : 0
 
   yaml_body = yamlencode({
     apiVersion = "cert-manager.io/v1"
