@@ -9,3 +9,8 @@ variable "deploy_nginx_ingress" {
   type        = any
   default     = {}
 }
+variable "deploy_argo_cd" {
+  description = "Deploy of Argo CD"
+  type        = any
+  default     = {}
+}
