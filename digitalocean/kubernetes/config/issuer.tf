@@ -1,7 +1,7 @@
 # Description: This file contains the terraform configuration to create the cert-manager issuer.
 
 resource "kubectl_manifest" "cert_manager_cluster_issuer" {
-  count = var.issuer_type == "cluster_issuer" ? 1 : 0
+  count = var.deploy_cert_manager && var.issuer_type.type == "cluster_issuer" ? 1 : 0
 
   yaml_body = yamlencode({
     apiVersion = "cert-manager.io/v1"
@@ -12,7 +12,7 @@ resource "kubectl_manifest" "cert_manager_cluster_issuer" {
     spec = {
       acme = {
         server = "https://acme-v02.api.letsencrypt.org/directory"
-        email  = var.email
+        email  = var.issuer_type.email
         privateKeySecretRef = {
           name = "letsencrypt-prod"
         }
@@ -20,7 +20,7 @@ resource "kubectl_manifest" "cert_manager_cluster_issuer" {
           {
             http01 = {
               ingress = {
-                ingressClassName = "nginx"
+                ingressClassName = var.issuer_type.ingress_class
               }
             }
           }
@@ -33,19 +33,19 @@ resource "kubectl_manifest" "cert_manager_cluster_issuer" {
 }
 
 resource "kubectl_manifest" "cert_manager_issuer" {
-  count = var.issuer_type == "issuer" ? 1 : 0
+  count = var.deploy_cert_manager && var.issuer_type.type == "issuer" ? 1 : 0
 
   yaml_body = yamlencode({
     apiVersion = "cert-manager.io/v1"
     kind       = "Issuer"
     metadata = {
-      name = "letsencrypt-issuer"
+      name      = "letsencrypt-issuer"
       namespace = "default"
     }
     spec = {
       acme = {
         server = "https://acme-v02.api.letsencrypt.org/directory"
-        email  = var.email
+        email  = var.issuer_type.email
         privateKeySecretRef = {
           name = "letsencrypt-issuer"
         }
@@ -53,7 +53,7 @@ resource "kubectl_manifest" "cert_manager_issuer" {
           {
             http01 = {
               ingress = {
-                ingressClassName = "nginx"
+                ingressClassName = var.issuer_type.ingress_class
               }
             }
           }

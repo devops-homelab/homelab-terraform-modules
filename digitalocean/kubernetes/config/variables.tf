@@ -16,16 +16,19 @@ variable "deploy_argo_cd" {
 }
 
 variable "issuer_type" {
-  description = "Choose between 'cluster_issuer' or 'issuer'"
-  type        = string
-  default     = "cluster_issuer"
-  validation {
-    condition     = contains(["cluster_issuer", "issuer", "none"], var.issuer_type)
-    error_message = "Valid values for issuer_type are 'cluster_issuer', 'issuer', or 'none'."
+  description = "Configuration for cert-manager issuer"
+  type = object({
+    type          = string    # "cluster_issuer", "issuer", "none"
+    email         = string    # Email for ACME registration
+    ingress_class = string    # Ingress class (e.g., "nginx")
+  })
+  default = {
+    type          = "none"
+    email         = ""
+    ingress_class = "nginx"
   }
-}
-
-variable "email" {
-  description = "Email for ACME registration"
-  type        = string
+  validation {
+    condition     = contains(["cluster_issuer", "issuer", "none"], var.issuer_type.type)
+    error_message = "Valid issuer types are 'cluster_issuer', 'issuer', or 'none'."
+  }
 }
