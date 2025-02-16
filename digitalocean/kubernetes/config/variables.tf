@@ -14,3 +14,18 @@ variable "deploy_argo_cd" {
   type        = any
   default     = {}
 }
+
+variable "issuer_type" {
+  description = "Choose between 'cluster_issuer' or 'issuer'"
+  type        = string
+  default     = "cluster_issuer"
+  validation {
+    condition     = contains(["cluster_issuer", "issuer", "none"], var.issuer_type)
+    error_message = "Valid values for issuer_type are 'cluster_issuer', 'issuer', or 'none'."
+  }
+}
+
+variable "email" {
+  description = "Email for ACME registration"
+  type        = string
+}
