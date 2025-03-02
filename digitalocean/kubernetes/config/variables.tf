@@ -32,3 +32,16 @@ variable "issuer_type" {
     error_message = "Valid issuer types are 'cluster_issuer', 'issuer', or 'none'."
   }
 }
+
+variable "enable_cluster_bootstrap" {
+  description = "Enable the cluster bootstrap application"
+  type        = bool
+  default     = false
+}
+
+variable "enable_application_bootstrap" {
+  description = "Enable the application bootstrap application"
+  type        = bool
+  default     = false
+  
+}
