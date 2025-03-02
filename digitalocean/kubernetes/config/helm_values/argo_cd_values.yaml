@@ -10,10 +10,23 @@ controller:
 configs:
   cm:
     timeout.reconciliation: 45s  
-    exec.enabled: true
     admin.enabled: true
-    url: "http://argocd.meditrack-app.me"
-    tls.insecure: "true"
+    url: "https://argocd.meditrack-app.me"
+    dex.config: |
+      connectors:
+        - type: github
+          id: github
+          name: GitHub
+          config:
+            clientID: "${sso_client_id}"
+            clientSecret: "${sso_client_secret}"
+            orgs:
+            - name: devops-homelab
+              teams:
+              - devops-team
+  rbac:
+    policy.csv: |
+      g, devops-homelab:devops-team, role:org-admin
 
   credentialTemplates:
     https-creds:
@@ -42,8 +55,6 @@ server:
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
     hostname: argocd.meditrack-app.me
-  extraArgs:
-    - "--insecure"
     
 repoServer:
   metrics:
