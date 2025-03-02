@@ -8,6 +8,6 @@ dashboard:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     ingressClassName: nginx
     hosts:
-      - host: argo-rollouts.meditrack-app.me
-        paths:
-          - /
+      - argo-rollouts.meditrack-app.me
+    paths:
+      - /
