@@ -11,3 +11,7 @@ dashboard:
       - argo-rollouts.meditrack-app.me
     paths:
       - /
+    tls:
+      - secretName: argo-rollouts-tls
+        hosts:
+          - argo-rollouts.meditrack-app.me
