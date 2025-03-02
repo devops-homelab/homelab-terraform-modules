@@ -113,8 +113,8 @@ resource "helm_release" "argo_rollouts" {
   }
 
   depends_on = [
-    helm_release.ingress_nginx,
+    helm_release.ingress-nginx,
     helm_release.argo-cd,
-    helm_release.cert_manager
+    helm_release.cert-manager
   ]
 }
