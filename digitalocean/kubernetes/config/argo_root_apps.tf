@@ -41,7 +41,7 @@ resource "kubectl_manifest" "application_root_app" {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
     metadata = {
-      name      = "application-root"
+      name      = "application-bootstrap"
       namespace = "argocd"
     }
     spec = {
