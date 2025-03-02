@@ -10,7 +10,7 @@ controller:
 configs:
   cm:
     timeout.reconciliation: 45s 
-    admin.enabled: false 
+    admin.enabled: true 
     exec.enabled: "true"
     url: "https://argocd.meditrack-app.me"
     dex.config: |
