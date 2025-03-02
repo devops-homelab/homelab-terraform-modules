@@ -10,7 +10,7 @@ controller:
 configs:
   cm:
     timeout.reconciliation: 45s  
-    admin.enabled: true
+    exec.enabled: "true"
     url: "https://argocd.meditrack-app.me"
     dex.config: |
       connectors:
@@ -55,7 +55,9 @@ server:
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
     hostname: argocd.meditrack-app.me
-    
+  extraArgs:
+    - "--insecure"
+
 repoServer:
   metrics:
     enabled: true  
