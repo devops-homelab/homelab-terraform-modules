@@ -18,7 +18,7 @@ resource "kubectl_manifest" "cluster_infra_bootstrap_app" {
       }
       project = "default"
       source = {
-        repoURL        = "https://homelab-argo-app-config"
+        repoURL        = "https://github.com/devops-homelab/homelab-argo-app-config.git"
         targetRevision = "main"
         path           = "infra"
       }
@@ -51,7 +51,7 @@ resource "kubectl_manifest" "application_root_app" {
       }
       project = "default"
       source = {
-        repoURL        = "https://homelab-argo-app-config"
+        repoURL        = "https://github.com/devops-homelab/homelab-argo-app-config.git"
         targetRevision = "main"
         path           = "apps"
       }
