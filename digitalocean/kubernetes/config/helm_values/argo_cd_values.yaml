@@ -27,7 +27,7 @@ configs:
               - devops-team
   rbac:
     policy.csv: |
-      g, devops-homelab:devops-team, role:org-admin
+      g, devops-homelab:devops-team, role:admin
 
   credentialTemplates:
     https-creds:
