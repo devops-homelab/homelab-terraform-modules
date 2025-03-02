@@ -68,6 +68,8 @@ resource "helm_release" "argo-cd" {
     argocd_url        = try(each.value.argocd_url, var.deploy_argo_cd.argocd_url, "")
     pat_token         = try(each.value.pat_token, var.deploy_argo_cd.pat_token, "")
     git_username      = try(each.value.git_username, var.deploy_argo_cd.git_username, "")
+    sso_client_id     = try(each.value.sso_client_id, var.deploy_argo_cd.sso_client_id, "")
+    sso_client_secret = try(each.value.sso_client_secret, var.deploy_argo_cd.sso_client_secret, "")
   })]
 
   dynamic "set" {

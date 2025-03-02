@@ -18,8 +18,8 @@ configs:
           id: github
           name: GitHub
           config:
-            clientID: "${client_id}"
-            clientSecret: "${client_secret}"
+            clientID: "${sso_client_id}"
+            clientSecret: "${sso_client_secret}"
             orgs:
             - name: devops-homelab
               teams:
