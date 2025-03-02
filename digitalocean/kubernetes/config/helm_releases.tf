@@ -84,3 +84,37 @@ resource "helm_release" "argo-cd" {
   depends_on = [ helm_release.ingress-nginx, helm_release.cert-manager ]
 
 }
+
+
+################################################################################
+# ARGO ROLLOUTS
+################################################################################
+resource "helm_release" "argo_rollouts" {
+  for_each = { for k, v in local.deploy_argo_rollouts : k => v }
+
+  name             = "argo-rollouts"
+  chart            = "argo-rollouts"
+  atomic           = true
+  namespace        = "argo-rollouts"
+  create_namespace = true
+  repository       = "https://argoproj.github.io/argo-helm"
+  version          = try(each.value.version, var.deploy_argo_rollouts.version, "")
+  values           = [templatefile("${path.module}/helm_values/argo_rollouts_values.yaml", {
+    argo_rollouts_url = try(each.value.argo_rollouts_url, var.deploy_argo_rollouts.argo_rollouts_url, "")
+  })]
+
+  dynamic "set" {
+    for_each = try(each.value.additional_set, [])
+    content {
+      name  = set.value.name
+      value = set.value.value
+      type  = lookup(set.value, "type", null)
+    }
+  }
+
+  depends_on = [
+    helm_release.ingress_nginx,
+    helm_release.argo-cd,
+    helm_release.cert_manager
+  ]
+}

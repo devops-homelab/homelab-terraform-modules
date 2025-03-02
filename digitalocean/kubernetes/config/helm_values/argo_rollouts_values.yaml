@@ -1,0 +1,13 @@
+installCRDs: true
+
+dashboard:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingressClassName: nginx
+    hosts:
+      - host: argo-rollouts.meditrack-app.me
+        paths:
+          - /

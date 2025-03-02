@@ -45,3 +45,10 @@ variable "enable_application_bootstrap" {
   default     = false
   
 }
+
+variable "deploy_argo_rollouts" {
+  description = "Deploy Argo Rollouts"
+  type        = any
+  default     = {}
+  
+}
