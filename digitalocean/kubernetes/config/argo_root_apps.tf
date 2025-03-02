@@ -21,6 +21,9 @@ resource "kubectl_manifest" "cluster_infra_bootstrap_app" {
         repoURL        = "https://github.com/devops-homelab/homelab-argo-app-config.git"
         targetRevision = "main"
         path           = "infra"
+        directory = {
+          recurse = true
+        }
       }
       syncPolicy = {
         automated = {
@@ -54,6 +57,9 @@ resource "kubectl_manifest" "application_root_app" {
         repoURL        = "https://github.com/devops-homelab/homelab-argo-app-config.git"
         targetRevision = "main"
         path           = "apps"
+        directory = {
+          recurse = true
+        }
       }
       syncPolicy = {
         automated = {
