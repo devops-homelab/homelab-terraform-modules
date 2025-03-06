@@ -50,7 +50,7 @@ server:
   serviceMonitor:
     enabled: true  
   ingress:
-    enabled: false
+    enabled: true
     tls: true
     ingressClassName: "nginx"
     annotations:
