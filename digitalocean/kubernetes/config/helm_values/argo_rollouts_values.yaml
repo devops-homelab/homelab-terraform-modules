@@ -8,10 +8,10 @@ dashboard:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     ingressClassName: nginx
     hosts:
-      - argo-rollouts.meditrack-app.me
+      - argo-rollouts.devopshomelab.live
     paths:
       - /
     tls:
       - secretName: argo-rollouts-tls
         hosts:
-          - argo-rollouts.meditrack-app.me
+          - argo-rollouts.devopshomelab.live

@@ -12,7 +12,7 @@ configs:
     timeout.reconciliation: 45s 
     admin.enabled: true 
     exec.enabled: true 
-    url: "https://argocd.meditrack-app.me"
+    url: "https://argocd.devopshomelab.live"
     dex.config: |
       connectors:
         - type: github
@@ -55,7 +55,7 @@ server:
     ingressClassName: "nginx"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    hostname: argocd.meditrack-app.me
+    hostname: argocd.devopshomelab.live
   extraArgs:
     - "--insecure"
 
