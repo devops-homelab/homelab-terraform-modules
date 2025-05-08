@@ -48,7 +48,7 @@ resource "helm_release" "cert-manager" {
     }
   }
 
-  depends_on = [ helm_release.ingress-nginx ]
+  # depends_on = [ helm_release.ingress-nginx ]
 }
 
 ################################################################################
@@ -81,7 +81,7 @@ resource "helm_release" "argo-cd" {
     }
   }
 
-  depends_on = [ helm_release.ingress-nginx, helm_release.cert-manager ]
+  depends_on = [ helm_release.cert-manager ]
 
 }
 
@@ -113,7 +113,6 @@ resource "helm_release" "argo_rollouts" {
   }
 
   depends_on = [
-    helm_release.ingress-nginx,
     helm_release.argo-cd,
     helm_release.cert-manager
   ]
