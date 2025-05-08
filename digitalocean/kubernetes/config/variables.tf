@@ -25,7 +25,7 @@ variable "issuer_type" {
   default = {
     type          = "none"
     email         = ""
-    ingress_class = "nginx"
+    ingress_class = "kong"
   }
   validation {
     condition     = contains(["cluster_issuer", "issuer", "none"], var.issuer_type.type)
