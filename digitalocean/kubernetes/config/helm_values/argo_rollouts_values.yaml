@@ -6,7 +6,7 @@ dashboard:
     enabled: true
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingressClassName: nginx
+    ingressClassName: kong
     hosts:
       - argo-rollouts.devopshomelab.live
     paths:
