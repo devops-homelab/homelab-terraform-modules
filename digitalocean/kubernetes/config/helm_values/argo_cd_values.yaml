@@ -52,7 +52,7 @@ server:
   ingress:
     enabled: true
     tls: true
-    ingressClassName: "nginx"
+    ingressClassName: "kong"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
     hostname: argocd.devopshomelab.live
