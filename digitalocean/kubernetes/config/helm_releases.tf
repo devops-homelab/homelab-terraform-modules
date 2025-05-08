@@ -24,6 +24,29 @@ resource "helm_release" "ingress-nginx" {
   }
 }
 
+resource "helm_release" "kong" {
+  for_each = { for k, v in local.deploy_kong : k => v }
+
+  name             = "kong"
+  chart            = "kong"
+  atomic           = true
+  namespace        = "kong"
+  create_namespace = true
+  repository       = "https://charts.konghq.com"
+  version          = try(each.value.version, var.deploy_kong.version, "")
+  timeout          = 600
+  values           = [file("${path.module}/helm_values/kong_values.yaml")]
+
+  dynamic "set" {
+    for_each = try(each.value.additional_set, [])
+    content {
+      name  = set.value.name
+      value = set.value.value
+      type  = lookup(set.value, "type", null)
+    }
+  }
+}
+
 ################################################################################
 # Cert Manager
 ################################################################################
@@ -48,7 +71,7 @@ resource "helm_release" "cert-manager" {
     }
   }
 
-  # depends_on = [ helm_release.ingress-nginx ]
+  depends_on = [ helm_release.kong ]
 }
 
 ################################################################################
@@ -81,7 +104,7 @@ resource "helm_release" "argo-cd" {
     }
   }
 
-  depends_on = [ helm_release.cert-manager ]
+  depends_on = [ helm_release.kong, helm_release.cert-manager ]
 
 }
 
@@ -113,6 +136,7 @@ resource "helm_release" "argo_rollouts" {
   }
 
   depends_on = [
+    helm_release.kong,
     helm_release.argo-cd,
     helm_release.cert-manager
   ]

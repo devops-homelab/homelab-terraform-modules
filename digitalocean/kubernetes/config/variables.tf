@@ -52,3 +52,10 @@ variable "deploy_argo_rollouts" {
   default     = {}
   
 }
+
+variable "deploy_kong" {
+  description = "Deploy Kong ingress controller"
+  type        = any
+  default     = {}
+  
+}
