@@ -5,6 +5,12 @@ kong:
   ingressController:
     enabled: true
     ingressClass: kong
+    # Enable Gateway API support
+    gatewayAPI:
+      enabled: true
+    env:
+      # Enable Gateway API feature gates
+      feature_gates: "GatewayAlpha=true"
   admin:
     tls:
       parameters: []
