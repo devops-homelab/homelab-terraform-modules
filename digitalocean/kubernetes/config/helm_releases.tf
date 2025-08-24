@@ -1,16 +1,4 @@
 ################################################################################
-# Gateway API CRDs
-################################################################################
-resource "kubectl_manifest" "gateway_api_crds" {
-  count = local.deploy_gateway_api ? 1 : 0
-  
-  yaml_body = file("${path.module}/manifests/gateway-api-standard.yaml")
-  
-  server_side_apply = true
-  wait = true
-}
-
-################################################################################
 # Ingress Nginx
 ################################################################################
 resource "helm_release" "ingress-nginx" {
@@ -57,8 +45,6 @@ resource "helm_release" "kong" {
       type  = lookup(set.value, "type", null)
     }
   }
-
-  depends_on = [kubectl_manifest.gateway_api_crds]
 }
 
 ################################################################################

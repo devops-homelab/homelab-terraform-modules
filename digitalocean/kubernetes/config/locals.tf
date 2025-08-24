@@ -4,5 +4,4 @@ locals {
   deploy_argo_cd                 = var.deploy_argo_cd != null ? var.deploy_argo_cd : null
   deploy_argo_rollouts           = var.deploy_argo_rollouts != null ? var.deploy_argo_rollouts : null
   deploy_kong                    = var.deploy_kong != null ? var.deploy_kong : null
-  deploy_gateway_api             = var.deploy_gateway_api
 }
