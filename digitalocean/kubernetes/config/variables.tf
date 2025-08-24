@@ -59,3 +59,9 @@ variable "deploy_kong" {
   default     = {}
   
 }
+
+variable "deploy_gateway_api" {
+  description = "Deploy Gateway API CRDs"
+  type        = bool
+  default     = false
+}
