@@ -1,6 +1,6 @@
 # Homelab Terraform Modules
 
-This repository contains a collection of Terraform modules for managing infrastructure in a homelab environment. The modules are designed to work with various cloud providers, including DigitalOcean and AWS.
+This repository contains production-ready Terraform modules for managing cloud-native infrastructure in homelab environments. The modules support modern Kubernetes deployments with Gateway API, advanced networking, and GitOps-ready configurations across multiple cloud providers.
 
 
 ## Modules
