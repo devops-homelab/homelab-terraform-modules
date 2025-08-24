@@ -8,9 +8,11 @@ kong:
     # Enable Gateway API support
     gatewayAPI:
       enabled: true
+    # Install Gateway API CRDs automatically
+    installCRDs: true
     env:
-      # Enable Gateway API feature gates
-      feature_gates: "GatewayAlpha=true"
+      # Enable Gateway API feature gates for v1.0.0
+      feature_gates: "Gateway=true"
   admin:
     tls:
       parameters: []
