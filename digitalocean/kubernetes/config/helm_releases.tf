@@ -71,7 +71,7 @@ resource "helm_release" "cert-manager" {
     }
   }
 
-  depends_on = [ helm_release.kong ]
+  depends_on = [ helm_release.kong, kubectl_manifest.kong_gatewayclass ]
 }
 
 ################################################################################
@@ -104,7 +104,7 @@ resource "helm_release" "argo-cd" {
     }
   }
 
-  depends_on = [ helm_release.kong, helm_release.cert-manager ]
+  depends_on = [ helm_release.kong, helm_release.cert-manager, kubectl_manifest.kong_gatewayclass ]
 
 }
 
@@ -138,6 +138,7 @@ resource "helm_release" "argo_rollouts" {
   depends_on = [
     helm_release.kong,
     helm_release.argo-cd,
-    helm_release.cert-manager
+    helm_release.cert-manager,
+    kubectl_manifest.kong_gatewayclass
   ]
 }
