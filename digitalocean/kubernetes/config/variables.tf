@@ -55,7 +55,9 @@ variable "deploy_argo_rollouts" {
 
 variable "deploy_kong" {
   description = "Deploy Kong ingress controller"
-  type        = any
-  default     = {}
-  
+  type = map(object({
+    version             = optional(string)
+    gateway_api_enabled = optional(bool, false)
+  }))
+  default = {}
 }

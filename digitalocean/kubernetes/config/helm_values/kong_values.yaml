@@ -7,7 +7,7 @@ kong:
     ingressClass: kong
     # Enable Gateway API support
     gatewayAPI:
-      enabled: true
+      enabled: ${gateway_api_enabled}
     # Install Gateway API CRDs automatically
     installCRDs: true
     env:

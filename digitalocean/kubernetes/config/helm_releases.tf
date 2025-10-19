@@ -26,7 +26,9 @@ resource "helm_release" "kong" {
   repository       = "https://charts.konghq.com"
   version          = try(each.value.version, var.deploy_kong.version, "")
   timeout          = 600
-  values           = [file("${path.module}/helm_values/kong_values.yaml")]
+  values           = [templatefile("${path.module}/helm_values/kong_values.yaml", {
+    gateway_api_enabled = try(each.value.gateway_api_enabled, false)
+  })]
 }
 
 ################################################################################
