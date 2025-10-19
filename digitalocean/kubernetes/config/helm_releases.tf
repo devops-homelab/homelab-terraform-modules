@@ -13,15 +13,6 @@ resource "helm_release" "ingress-nginx" {
   version          = try(each.value.version, var.deploy_nginx_ingress.version, "")
   timeout          = 600
   values           = [file("${path.module}/helm_values/ingress_nginx_values.yaml")]
-
-  dynamic "set" {
-    for_each = try(each.value.additional_set, [])
-    content {
-      name  = set.value.name
-      value = set.value.value
-      type  = lookup(set.value, "type", null)
-    }
-  }
 }
 
 resource "helm_release" "kong" {
@@ -36,15 +27,6 @@ resource "helm_release" "kong" {
   version          = try(each.value.version, var.deploy_kong.version, "")
   timeout          = 600
   values           = [file("${path.module}/helm_values/kong_values.yaml")]
-
-  dynamic "set" {
-    for_each = try(each.value.additional_set, [])
-    content {
-      name  = set.value.name
-      value = set.value.value
-      type  = lookup(set.value, "type", null)
-    }
-  }
 }
 
 ################################################################################
@@ -62,16 +44,7 @@ resource "helm_release" "cert-manager" {
   values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
   timeout    = 100
 
-  dynamic "set" {
-    for_each = try(each.value.additional_set, [])
-    content {
-      name  = set.value.name
-      value = set.value.value
-      type  = lookup(set.value, "type", null)
-    }
-  }
-
-  depends_on = [ helm_release.kong, kubectl_manifest.kong_gatewayclass ]
+  depends_on = [helm_release.kong, kubectl_manifest.kong_gatewayclass]
 }
 
 ################################################################################
@@ -87,7 +60,7 @@ resource "helm_release" "argo-cd" {
   create_namespace = true
   repository       = "https://argoproj.github.io/argo-helm"
   version          = try(each.value.version, var.deploy_argo_cd.version, "")
-  values           = [templatefile("${path.module}/helm_values/argo_cd_values.yaml", {
+  values = [templatefile("${path.module}/helm_values/argo_cd_values.yaml", {
     argocd_url        = try(each.value.argocd_url, var.deploy_argo_cd.argocd_url, "")
     pat_token         = try(each.value.pat_token, var.deploy_argo_cd.pat_token, "")
     git_username      = try(each.value.git_username, var.deploy_argo_cd.git_username, "")
@@ -95,16 +68,7 @@ resource "helm_release" "argo-cd" {
     sso_client_secret = try(each.value.sso_client_secret, var.deploy_argo_cd.sso_client_secret, "")
   })]
 
-  dynamic "set" {
-    for_each = try(each.value.additional_set, [])
-    content {
-      name  = set.value.name
-      value = set.value.value
-      type  = lookup(set.value, "type", null)
-    }
-  }
-
-  depends_on = [ helm_release.kong, helm_release.cert-manager, kubectl_manifest.kong_gatewayclass ]
+  depends_on = [helm_release.kong, helm_release.cert-manager, kubectl_manifest.kong_gatewayclass]
 
 }
 
@@ -122,18 +86,9 @@ resource "helm_release" "argo_rollouts" {
   create_namespace = true
   repository       = "https://argoproj.github.io/argo-helm"
   version          = try(each.value.version, var.deploy_argo_rollouts.version, "")
-  values           = [templatefile("${path.module}/helm_values/argo_rollouts_values.yaml", {
+  values = [templatefile("${path.module}/helm_values/argo_rollouts_values.yaml", {
     argo_rollouts_url = try(each.value.argo_rollouts_url, var.deploy_argo_rollouts.argo_rollouts_url, "")
   })]
-
-  dynamic "set" {
-    for_each = try(each.value.additional_set, [])
-    content {
-      name  = set.value.name
-      value = set.value.value
-      type  = lookup(set.value, "type", null)
-    }
-  }
 
   depends_on = [
     helm_release.kong,
