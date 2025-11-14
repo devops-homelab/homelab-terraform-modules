@@ -49,13 +49,16 @@ server:
     enabled: true  
   serviceMonitor:
     enabled: true  
+  # Kong Ingress (disabled - using Gateway API with Cilium)
+  # ingress:
+  #   enabled: true
+  #   tls: true
+  #   ingressClassName: "kong"
+  #   annotations:
+  #     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  #   hostname: argocd.devopshomelab.live
   ingress:
-    enabled: true
-    tls: true
-    ingressClassName: "kong"
-    annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    hostname: argocd.devopshomelab.live
+    enabled: false
   extraArgs:
     - "--insecure"
 
