@@ -61,3 +61,6 @@ variable "deploy_kong" {
   }))
   default = {}
 }
+
+# Note: Cilium is pre-installed and managed by DigitalOcean on DOKS clusters
+# No need for deploy_cilium variable

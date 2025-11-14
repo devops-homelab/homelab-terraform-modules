@@ -46,7 +46,7 @@ resource "helm_release" "cert-manager" {
   values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
   timeout    = 100
 
-  depends_on = [helm_release.kong, kubectl_manifest.kong_gatewayclass]
+  depends_on = []
 }
 
 ################################################################################
@@ -70,7 +70,7 @@ resource "helm_release" "argo-cd" {
     sso_client_secret = try(each.value.sso_client_secret, var.deploy_argo_cd.sso_client_secret, "")
   })]
 
-  depends_on = [helm_release.kong, helm_release.cert-manager, kubectl_manifest.kong_gatewayclass]
+  depends_on = [helm_release.cert-manager]
 
 }
 
@@ -93,9 +93,7 @@ resource "helm_release" "argo_rollouts" {
   })]
 
   depends_on = [
-    helm_release.kong,
     helm_release.argo-cd,
-    helm_release.cert-manager,
-    kubectl_manifest.kong_gatewayclass
+    helm_release.cert-manager
   ]
 }
