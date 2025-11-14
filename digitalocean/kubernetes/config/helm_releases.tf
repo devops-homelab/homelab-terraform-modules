@@ -46,7 +46,6 @@ resource "helm_release" "cert-manager" {
   values     = [file("${path.module}/helm_values/cert_manager_values.yaml")]
   timeout    = 100
 
-  depends_on = []
 }
 
 ################################################################################
